@@ -5,4 +5,4 @@ __all__ = [
     'pubot',
 ]
 
-import scholar as _sch
+import scholarly as _sch
