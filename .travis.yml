@@ -10,7 +10,7 @@ install:
   - pip install coverage
 
 script:
-  - nosetests --with-coverage --cover-package prwlr
+  - nosetests --with-coverage --cover-package pubot
 
 notifications:
   email:
