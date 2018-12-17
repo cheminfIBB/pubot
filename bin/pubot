@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+
+
+import pubot as pb
+import argparse
+
+from pubot import __version__
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="pubot",
+        usage="pubot [OPTION]",
+        description="Handy script for retrieving scientific publications info",
+    )
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=__version__,
+    )
+
+    try:
+        args = parser.parse_args()
+    except SystemExit as error:
+        if error.code == 2:
+            parser.print_help()
+        parser.exit()
+
+if __name__ == '__main__':
+    main()
