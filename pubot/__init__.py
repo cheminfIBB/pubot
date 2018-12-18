@@ -5,4 +5,7 @@ __all__ = [
     'pubot',
 ]
 
-import scholarly as _sch
+try:
+    import scholarly as _sch
+except ImportError:
+    print('Could not import dependencies. Ignore if running setup.')
