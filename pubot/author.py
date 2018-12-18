@@ -10,8 +10,16 @@ class Author:
         affiliation,
         email,
     ):
+        for _ in (
+            id,
+            name,
+            affiliation,
+            email,
+        ):
+            if not isinstance(_, str):
+                raise ValueError
         self.id = id
-        self.name = name
+        self.name = name.title()
         self.affiliation = affiliation
         self.email = email
 

@@ -30,6 +30,38 @@ class AuthorTests(unittest.TestCase):
         self.assertEqual(self.ref_affiliation, self.test_author.affiliation)
         self.assertEqual(self.ref_email, self.test_author.email)
 
+    def test_attribs_fail(self):
+        """
+        Tests if pubot.author.Author object raises an exception when bad values
+        passed to init.
+        """
+        import pubot.author
+        with self.assertRaises(ValueError):
+            pubot.author.Author(
+                id=uuid.uuid4(),
+                name=self.ref_name,
+                affiliation=self.ref_affiliation,
+                email=self.ref_email,
+            )
+            pubot.author.Author(
+                id=self.ref_id,
+                name=uuid.uuid4(),
+                affiliation=self.ref_affiliation,
+                email=self.ref_email,
+            )
+            pubot.author.Author(
+                id=self.ref_id,
+                name=self.ref_name,
+                affiliation=uuid.uuid4(),
+                email=self.ref_email,
+            )
+            pubot.author.Author(
+                id=self.ref_id,
+                name=self.ref_name,
+                affiliation=self.ref_affiliation,
+                email=uuid.uuid4(),
+            )
+
     def test_repr(self):
         """
         Tests if pubot.author.Author.__repr__ returns proper value.
