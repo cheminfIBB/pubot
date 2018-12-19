@@ -9,6 +9,7 @@ class Author:
         name,
         affiliation,
         email,
+        citations,
     ):
         for _ in (
             id,
@@ -18,10 +19,13 @@ class Author:
         ):
             if not isinstance(_, str):
                 raise ValueError
+        if not isinstance(citations, int):
+            raise ValueError
         self.id = id
         self.name = name.title()
         self.affiliation = affiliation
         self.email = email
+        self.citations = citations
 
     def __repr__(self):
         return self.name
