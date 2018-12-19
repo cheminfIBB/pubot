@@ -1,5 +1,6 @@
 import unittest
 import uuid
+import random
 
 
 class AuthorTests(unittest.TestCase):
