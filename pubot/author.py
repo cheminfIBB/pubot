@@ -12,22 +12,19 @@ class Author:
         citations,
         interests,
     ):
-        for _ in (
-            id,
-            name,
-            affiliation,
-            email,
+        for n, v, t in zip(
+            ('id', 'name', 'affiliation', 'email', 'citations',),
+            (id, name, affiliation, email, citations,),
+            (str, str, str, str, int)
         ):
-            if not isinstance(_, str):
-                raise ValueError
-        if not isinstance(citations, int):
-            raise ValueError
+            if not isinstance(v, t):
+                raise ValueError('{} must be {} not {}.'.format(n, t, type(v)))
         if isinstance(interests, str):
-            raise ValueError
+            raise ValueError('interests must be {} not {}.'.format(type(interests)))
         try:
             iter(interests)
         except TypeError:
-            raise ValueError
+            raise ValueError('interests must be {} not {}.'.format(type(interests)))
         self.id = id
         self.name = name.title()
         self.affiliation = affiliation
