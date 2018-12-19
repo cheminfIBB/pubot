@@ -3,7 +3,7 @@ import uuid
 import random
 
 
-class AuthorTestsInit(unittest.TestCase):
+class AuthorInitTests(unittest.TestCase):
     """
     Tests of the pubot.author.Author initialization.
     """
@@ -108,7 +108,7 @@ class AuthorTestsInit(unittest.TestCase):
         self.assertEqual(self.ref_name, str(self.test_author))
 
 
-class AuthorTestsComparisons(unittest.TestCase):
+class AuthorComparisonsTests(unittest.TestCase):
     """
     Tests of pubot.author.Author comparison magics.
     """
@@ -213,7 +213,7 @@ class AuthorTestsComparisons(unittest.TestCase):
         self.assertLess(self.test_author_2, self.test_author_1)
 
 
-class PublicationTestsInit(unittest.TestCase):
+class PublicationInitTests(unittest.TestCase):
     """
     Test of the pubot.publication.Publication initialization.
     """
