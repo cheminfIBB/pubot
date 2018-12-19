@@ -211,3 +211,54 @@ class AuthorTestsComparisons(unittest.TestCase):
         in the proper way.
         """
         self.assertLess(self.test_author_2, self.test_author_1)
+
+
+class PublicationTestsInit(unittest.TestCase):
+    """
+    Test of the pubot.publication.Publication initialization.
+    """
+    def setUp(self):
+        import pubot.author
+        import pubot.publication
+
+        self.ref_author_id = str(uuid.uuid4()).split('-')[0]
+        self.ref_name = 'Arnold Schwarzenegger'
+        self.ref_affiliation = 'Institute of SkyNet SI'
+        self.ref_email = 'arni@future.net'
+        self.ref_citations = random.randint(0, 10000)
+        self.ref_interests = ['Machine Learning', 'Doomsday devices', 'Miniguns',]
+
+        self.ref_publication_id = str(uuid.uuid4()).split('-')[0]
+        self.ref_title = "'Kill all humans - Bender's great dream"
+        self.ref_abstract = """Whether to wipe-out all meatballs or not is
+        still an open question for a robot. In this paper, we discuss ethics and
+        methods for the robots' world domination."""
+        self.ref_url = 'https://journal-of-robotics.org/papers/id=66'
+        self.ref_citations = random.randint(0, 10000)
+        self.ref_source = 'scholar'
+
+        self.test_author = pubot.author.Author(
+            id=self.ref_author_id,
+            name=self.ref_name,
+            affiliation=self.ref_affiliation,
+            email=self.ref_email,
+            citations = self.ref_citations,
+            interests = self.ref_interests,
+        )
+
+        self.test_publication = pubot.publication.Publication(
+            id=self.ref_publication_id,
+            title=self.ref_title,
+            abstract=self.ref_abstract,
+            author=self.test_author,
+            url=self.ref_url,
+            citations=self.ref_citations,
+            source=self.ref_source,
+        )
+
+    def test_attribs(self):
+        """
+        Tests if pubot.publication.Publication object has proper attributes
+        after init.
+        """
+        self.assertEqual(self.ref_publication_id, self.test_publication.id)
