@@ -34,3 +34,45 @@ class Author:
 
     def __repr__(self):
         return self.name
+
+    def __lt__(
+        self,
+        other
+    ):
+        return self.citations < other.citations
+
+    def __le__(
+        self,
+        other
+    ):
+        return self.citations <= other.citations
+
+    def __gt__(
+        self,
+        other
+    ):
+        return self.citations > other.citations
+
+    def __ge__(
+        self,
+        other
+    ):
+        return self.citations >= other.citations
+
+    def __ne__(
+        self,
+        other
+    ):
+        return self.id != other.id
+
+    def __eq__(
+        self,
+        other
+    ):
+        return self.name.lower() == other.name.lower() and self.affiliation.lower() == other.affiliation.lower()
+
+    def __hash__(self):
+        return hash(
+            self.name.lower(),
+            self.affiliation.lower(),
+            )

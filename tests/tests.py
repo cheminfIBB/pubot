@@ -3,9 +3,9 @@ import uuid
 import random
 
 
-class AuthorTests(unittest.TestCase):
+class AuthorTestsInit(unittest.TestCase):
     """
-    Tests of the pubot.author.
+    Tests of the pubot.author.Author initialization.
     """
     def setUp(self):
         import pubot.author
@@ -106,3 +106,108 @@ class AuthorTests(unittest.TestCase):
         Tests if pubot.author.Author.__repr__ returns proper value.
         """
         self.assertEqual(self.ref_name, str(self.test_author))
+
+
+class AuthorTestsComparisons(unittest.TestCase):
+    """
+    Tests of pubot.author.Author comparison magics.
+    """
+    def setUp(self):
+        import pubot.author
+
+        self.ref_citations_1, self.ref_citations_2 = (random.randint(0, 10000), random.randint(0, 10000))
+        while self.ref_citations_1 < self.ref_citations_2:
+            self.ref_citations_1, self.ref_citations_2 = (random.randint(0, 10000), random.randint(0, 10000))
+
+
+        self.ref_id_1 = str(uuid.uuid4()).split('-')[0]
+        self.ref_name_1 = 'Arnold Schwarzenegger'
+        self.ref_affiliation_1 = 'Institute of SkyNet SI'
+        self.ref_email_1 = 'arni@future.net'
+        self.ref_interests_1 = ['Machine Learning', 'Doomsday devices', 'Miniguns',]
+
+        self.ref_id_2 = str(uuid.uuid4()).split('-')[0]
+        self.ref_name_2 = 'Sylvester Stallone'
+        self.ref_affiliation_2 = 'Institute of Italian Stallions'
+        self.ref_email_2 = 'sly@cliffhanger.org'
+        self.ref_interests_2 = ['Mountain Climbing', 'Gym', 'Miniguns',]
+
+        self.test_author_1 = pubot.author.Author(
+            id=self.ref_id_1,
+            name=self.ref_name_1,
+            affiliation=self.ref_affiliation_1,
+            email=self.ref_email_1,
+            citations = self.ref_citations_1,
+            interests = self.ref_interests_1,
+        )
+        self.test_author_2, self.test_author_3 = (
+            pubot.author.Author(
+                id=self.ref_id_2,
+                name=self.ref_name_2,
+                affiliation=self.ref_affiliation_2,
+                email=self.ref_email_2,
+                citations = self.ref_citations_2,
+                interests = self.ref_interests_2,
+        ),
+            pubot.author.Author(
+                id=self.ref_id_2,
+                name=self.ref_name_2,
+                affiliation=self.ref_affiliation_2,
+                email=self.ref_email_2,
+                citations = self.ref_citations_2,
+                interests = self.ref_interests_2,
+        ),
+            )
+# NOTE: This is a author_1 and author_2 hybrid for comparisons
+        self.test_author_4 = pubot.author.Author(
+            id=self.ref_id_2,
+            name=self.ref_name_1,
+            affiliation=self.ref_affiliation_1,
+            email=self.ref_email_2,
+            citations = self.ref_citations_2,
+            interests = self.ref_interests_2,
+        )
+
+    def test_equal(self):
+        """
+        Tests if the same instances of pubot.author.Author are the same.
+        """
+        self.assertEqual(self.test_author_1, self.test_author_1)
+        self.assertEqual(self.test_author_2, self.test_author_2)
+        self.assertEqual(self.test_author_1, self.test_author_4)
+
+    def test_not_equal(self):
+        """
+        Tests if the different instance of pubot.author.Author are not the same.
+        """
+        self.assertNotEqual(self.test_author_1, self.test_author_2)
+
+    def test_greater(self):
+        """
+        Tests if the different instance of pubot.author.Author are not equal
+        in the proper way.
+        """
+        self.assertGreater(self.test_author_1, self.test_author_2)
+
+    def test_greater_equal(self):
+        """
+        Tests if the different instance of pubot.author.Author are not equal
+        in the proper way.
+        """
+        self.assertGreaterEqual(self.test_author_1, self.test_author_2)
+        self.assertGreaterEqual(self.test_author_2, self.test_author_3)
+
+    def test_less_equal(self):
+        """
+        Tests if the different instance of pubot.author.Author are not equal
+        in the proper way.
+        """
+        self.assertLessEqual(self.test_author_2, self.test_author_1)
+        self.assertLessEqual(self.test_author_2, self.test_author_3)
+
+    def test_lesser(self):
+        """
+        Tests if the different instance of pubot.author.Author are not equal
+        in the proper way.
+        """
+        self.assertLess(self.test_author_2, self.test_author_1)
