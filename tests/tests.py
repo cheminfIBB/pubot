@@ -15,6 +15,7 @@ class AuthorTests(unittest.TestCase):
         self.ref_affiliation = 'Institute of SkyNet SI'
         self.ref_email = 'arni@future.net'
         self.ref_citations = random.randint(0, 10000)
+        self.ref_interests = ['Machine Learning', 'Doomsday devices', 'Miniguns',]
 
         self.test_author = pubot.author.Author(
             id=self.ref_id,
@@ -22,6 +23,7 @@ class AuthorTests(unittest.TestCase):
             affiliation=self.ref_affiliation,
             email=self.ref_email,
             citations = self.ref_citations,
+            interests = self.ref_interests,
         )
 
     def test_attribs(self):
@@ -33,6 +35,7 @@ class AuthorTests(unittest.TestCase):
         self.assertEqual(self.ref_affiliation, self.test_author.affiliation)
         self.assertEqual(self.ref_email, self.test_author.email)
         self.assertEqual(self.ref_citations, self.test_author.citations)
+        self.assertEqual(self.ref_interests, self.test_author.interests)
 
     def test_attribs_fail(self):
         """
@@ -47,6 +50,7 @@ class AuthorTests(unittest.TestCase):
                 affiliation=self.ref_affiliation,
                 email=self.ref_email,
                 citations=self.ref_citations,
+                interests=self.ref_interests,
             )
             pubot.author.Author(
                 id=self.ref_id,
@@ -54,6 +58,7 @@ class AuthorTests(unittest.TestCase):
                 affiliation=self.ref_affiliation,
                 email=self.ref_email,
                 citations=self.ref_citations,
+                interests=self.ref_interests,
             )
             pubot.author.Author(
                 id=self.ref_id,
@@ -61,6 +66,7 @@ class AuthorTests(unittest.TestCase):
                 affiliation=uuid.uuid4(),
                 email=self.ref_email,
                 citations=self.ref_citations,
+                interests=self.ref_interests,
             )
             pubot.author.Author(
                 id=self.ref_id,
@@ -68,6 +74,7 @@ class AuthorTests(unittest.TestCase):
                 affiliation=self.ref_affiliation,
                 email=uuid.uuid4(),
                 citations=self.ref_citations,
+                interests=self.ref_interests,
             )
             pubot.author.Author(
                 id=self.ref_id,
@@ -75,6 +82,23 @@ class AuthorTests(unittest.TestCase):
                 affiliation=self.ref_affiliation,
                 email=self.ref_email,
                 citations=uuid.uuid4(),
+                interests=self.ref_interests,
+            )
+            pubot.author.Author(
+                id=self.ref_id,
+                name=self.ref_name,
+                affiliation=self.ref_affiliation,
+                email=self.ref_email,
+                citations=self.ref_citations,
+                interests=uuid.uuid4(),
+            )
+            pubot.author.Author(
+                id=self.ref_id,
+                name=self.ref_name,
+                affiliation=self.ref_affiliation,
+                email=self.ref_email,
+                citations=self.ref_citations,
+                interests=self.ref_name,
             )
 
     def test_repr(self):
