@@ -1,4 +1,5 @@
-import urllib
+import urllib.parse
+import pubot.author
 
 
 class Publication:
@@ -26,7 +27,7 @@ class Publication:
                 raise ValueError('{} must be {} not {}.'.format(n, t, type(v)))
         if not isinstance(author, pubot.author.Author):
             raise ValueError('author must be {} not {}.'.format(pubot.author.Author, type(v)))
-        if urllib.parse.urlparse(url).scheme != 'http' or urllib.parse.urlparse(url).scheme != 'https':
+        if urllib.parse.urlparse(url).scheme not in ['https', 'http']:
             raise ValueError('url must be a proper URL not {}'.format(type(url)))
 
         self.id = id
