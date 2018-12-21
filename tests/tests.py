@@ -1,6 +1,7 @@
 import unittest
 import uuid
 import random
+import pandas as pd
 
 
 class AuthorInitTests(unittest.TestCase):
@@ -482,3 +483,75 @@ class PublicationComparisonTests(unittest.TestCase):
         in the proper way.
         """
         self.assertLess(self.test_publication_2, self.test_publication_1)
+
+
+class IOTests(unittest.TestCase):
+    """
+    Tests of the pubot.io.
+    """
+    def setUp(self):
+        import pubot.author
+        import pubot.io
+
+        self.ref_citations_1, self.ref_citations_2 = (
+            random.randint(0, 10000),
+            random.randint(0, 10000),
+        )
+        while self.ref_citations_1 < self.ref_citations_2:
+            self.ref_citations_1, self.ref_citations_2 = (
+                random.randint(0, 10000),
+                random.randint(0, 10000),
+            )
+
+
+        self.ref_id_1 = str(uuid.uuid4()).split('-')[0]
+        self.ref_name_1 = 'Arnold Schwarzenegger'
+        self.ref_affiliation_1 = 'Institute of SkyNet SI'
+        self.ref_email_1 = 'arni@future.net'
+        self.ref_interests_1 = ['Machine Learning', 'Doomsday devices', 'Miniguns',]
+
+        self.ref_id_2 = str(uuid.uuid4()).split('-')[0]
+        self.ref_name_2 = 'Sylvester Stallone'
+        self.ref_affiliation_2 = 'Institute of Italian Stallions'
+        self.ref_email_2 = 'sly@cliffhanger.org'
+        self.ref_interests_2 = ['Mountain Climbing', 'Gym', 'Miniguns',]
+
+        self.test_author_csv_filename = 'test_data/IOTests/test_authors.csv'
+        self.test_names_column = 'AUTHORS'
+        self.test_affiliations_column = 'AFFILIATION'
+        self.test_sep = ','
+
+
+        self.ref_author_1, self.ref_author_2 = (
+            pubot.author.Author(
+                id=self.ref_id_1,
+                name=self.ref_name_1,
+                affiliation=self.ref_affiliation_1,
+                email=self.ref_email_1,
+                citations = self.ref_citations_1,
+                interests = self.ref_interests_1,
+            ),
+            pubot.author.Author(
+                id=self.ref_id_2,
+                name=self.ref_name_2,
+                affiliation=self.ref_affiliation_2,
+                email=self.ref_email_2,
+                citations = self.ref_citations_2,
+                interests = self.ref_interests_2,
+            ),
+        )
+        self.ref_authors = [self.ref_author_1, self.ref_author_2]
+
+        self.test_authors_from_csv = pubot.io.authors_from_csv(
+            filename=self.test_author_csv_filename,
+            names_column=self.test_affiliations_column,
+            affiliations_column=self.test_affiliations_column,
+            sep=self.test_sep,
+        )
+
+    def test_authors_from_csv(self):
+        """
+        Tests if pubot.author.Author objects are properly created from a column
+        from the CSV file.
+        """
+        self.assertCountEqual(self.ref_authors, self.test_authors_from_csv)
