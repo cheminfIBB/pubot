@@ -19,10 +19,13 @@ def author(
         pubot.author.Author objects.
     """
     authors_query = _sch.search_author(name)
-    authors = [i.fill() for i in authors_query]
-    for author in authors:
-        if affiliation in author:
+    for author in authors_query:
+        if affiliation in author.affiliation:
             return _Author(
                 id=author.id,
-
+                name=author.name,
+                affiliation=author.affiliation,
+                email=author.email,
+                citations=author.citedby,
+                interests=author.interests,
             )

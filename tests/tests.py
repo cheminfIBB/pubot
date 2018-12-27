@@ -485,6 +485,46 @@ class PublicationComparisonTests(unittest.TestCase):
         self.assertLess(self.test_publication_2, self.test_publication_1)
 
 
+class SearchTests(unittest.TestCase):
+    """
+    Tests if the pubot.search.
+    """
+    def setUp(self):
+        import pubot.author
+        import pubot.search
+
+        self.ref_id = '4MGHwSYAAAAJ'
+        self.ref_name = 'Pawel Siedlecki'
+        self.ref_affiliation = 'Institute of Biochemistry and Biophysics PAS'
+        self.ref_email = '@ibb.waw.pl'
+        self.ref_citations = 1009
+        self.ref_interests = [
+            'cheminformatics',
+            'structural biology',
+            'target discovery',
+        ]
+
+        self.ref_author = pubot.author.Author(
+            id=self.ref_id,
+            name=self.ref_name,
+            affiliation=self.ref_affiliation,
+            email=self.ref_email,
+            citations = self.ref_citations,
+            interests = self.ref_interests,
+        )
+
+        self.test_search_result = pubot.search.author(
+            name=self.ref_name,
+            affiliation=self.ref_affiliation
+        )
+
+    def test_author(self):
+        """
+        Tests if pubot.search.author returns proper value.
+        """
+        self.assertEqual(self.ref_author, self.test_search_result)
+
+
 class IOTests(unittest.TestCase):
     """
     Tests of the pubot.io.
